@@ -1,26 +1,36 @@
-var express = require('express')
-var path = require('path')
+const express = require('express')
+const path = require('path')
+const expressip = require('express-ip')
+const ip = require('ip')
+const app = express()
 
-var app = express()
+app.use(expressip().getIpInfoMiddleware)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
 app.use(express.static(path.join(__dirname, 'public')))
+const router = express.Router()
 
-const PORT = 8080
-
-var router = express.Router()
-
-router.get('/', function (request, response) {
+router.get('/', function (req, res) {
+  const ipInfo = req.ipInfo
   const serverTime = new Date().toLocaleString()
-  const clientIp = request.connection.remoteAddress
-  const serverIp = server.address().address
-  response.render('index', { clientIp, serverTime, serverIp })
+  const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  const serverIp = ip.address()
+  res.setHeader('X-Powered-By', 'Veriksystems')
+
+  console.log(ipInfo)
+  res.render('index', { clientIp, serverTime, serverIp })
+})
+
+app.use(function (req, res, next) {
+  res.setHeader('X-Powered-By', 'Veriksystems')
+  next()
 })
 app.use('/', router)
 
-const server = app.listen(PORT, function () {
+const PORT = 8080
+app.listen(PORT, function () {
   console.log('Listening on port ' + PORT)
 })
