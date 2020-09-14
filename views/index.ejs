@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>Address Information </title>
+    <title> Address Information </title>
     <style>
         .time-container,
         .address-container {
@@ -93,13 +93,14 @@
 </head>
 
 <body>
-    <h1>Address Information</h1>
+    <h1>Your Ip Address</h1>
     <div class="address-container">
         <!--m-->
         <div class="address-panel">
             <h2 class="address-header"><%= clientIp %></h2>
             <div class="address-heading">
                 <div class="address-heading-child"><%= clientIp %></div>
+                <div class="address-heading-detail">in: <%= city %></div>
                 <div class="address-heading-detail">Server address: <%= serverIp %></div>
                 <span class="vk_gy vk_sh"> Server Time:  <%= serverTime %> </span>
             </div>
