@@ -11,5 +11,5 @@ publish:
 	docker tag $(APP_NAME) $(DOCKER_HUB)/$(APP_NAME):latest
 	docker push $(DOCKER_HUB)/$(APP_NAME):latest
 
-deploy-publish: build-docker publish
+dockerio: build-docker publish
 
