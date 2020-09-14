@@ -1,12 +1,250 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Example</title>
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,400italic" rel="stylesheet" type="text/css">
-    <link href="./css/style.css" rel="stylesheet" />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-  </body>
+
+<head>
+    <title>Address Information </title>
+    <style>
+        .time-container,
+        .address-container {
+            color: #222;
+            font-weight: normal;
+            line-height: 1.2;
+            text-align: left;
+            width: 600px;
+            margin-top: 0;
+            margin-bottom: 28px;
+            font-family: arial, sans-serif;
+            font-size: 14px;
+            clear: both;
+        }
+
+        .time-panel,
+        .address-panel {
+            color: #222;
+            font-weight: normal;
+            line-height: 1.2;
+            text-align: left;
+            font-family: arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .time-header,
+        .weather-header,
+        .address-header {
+            color: #222;
+            line-height: 1.2;
+            text-align: left;
+            font-family: arial, sans-serif;
+            clip: rect(1px, 1px, 1px, 1px);
+            height: 1px;
+            margin: 0;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            white-space: nowrap;
+            width: 1px;
+            z-index: -1000;
+            user-select: none;
+        }
+
+        .time-heading,
+        .address-heading {
+            line-height: 1.2;
+            text-align: left;
+            font-family: arial, sans-serif;
+            color: #878787 !important;
+            font-weight: lighter !important;
+            font-size: medium !important;
+            border-radius: 8px;
+            border: 1px solid #dfe1e5;
+            box-shadow: none;
+            background-color: #fff;
+            position: relative;
+            width: 618px;
+            padding: 20px 16px 24px;
+            padding-bottom: 20px;
+        }
+
+        .time-heading-child,
+        .weather-heading-child,
+        .address-heading-child
+         {
+            line-height: 1.2;
+            text-align: left;
+            font-family: arial, sans-serif;
+            color: #212121 !important;
+            font-weight: lighter !important;
+            margin-bottom: 5px;
+            font-size: xx-large !important;
+        }
+
+        .time-heading-detail,
+        .weather-heading-detail,
+        .address-heading-detail
+         {
+            line-height: 1.2;
+            text-align: left;
+            font-family: arial, sans-serif;
+            color: #878787 !important;
+            font-weight: lighter !important;
+            font-size: medium !important;
+            text-transform: capitalize;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Address Information</h1>
+    <div class="address-container">
+        <!--m-->
+        <div class="address-panel">
+            <h2 class="address-header"><%= clientIp %></h2>
+            <div class="address-heading">
+                <div class="address-heading-child"><%= clientIp %></div>
+                <div class="address-heading-detail">Server address: <%= serverIp %></div>
+                <span class="vk_gy vk_sh"> Server Time:  <%= serverTime %> </span>
+            </div>
+        </div>
+        <!--n-->
+    </div>
+    <h1>Clock</h1>
+    <div class="time-container">
+        <!--m-->
+        <div class="time-panel">
+            <h2 class="time-header">UTC Time</h2>
+            <div class="time-heading">
+                <div class="time-heading-child">PINGING...</div>
+                <div class="time-heading-detail">PINGING...</div>
+                <span class="vk_gy vk_sh"> Time in UTC </span>
+            </div>
+        </div>
+        <!--n-->
+    </div>
+    <h1><span class='city'></span>&nbsp;Weather</h1>
+    <div class="time-panel">
+        <h2 class="weather-header"></h2>
+        <div class="time-heading">
+            <img class="city-icon" src="" alt="" />
+            <div><span class="weather-heading-child">PINGING...</span></div>
+            <div class="weather-heading-detail">PINGING...</div>
+            <div class="weather-other"> </div>
+        </div>
+    </div>
+    <script>
+        var nameElem = document.getElementsByClassName("city");
+        var tempElem = document.getElementsByClassName("weather-heading-child");
+        var cityIcon = document.getElementsByClassName("city-icon");
+        var cityIcon = document.getElementsByClassName("city-icon");
+        var statusElem = document.getElementsByClassName("weather-heading-detail");
+        var otherWeather = document.getElementsByClassName("weather-other");
+
+        var cityName = 'california'
+        var key = '051160902e451d3ef806d0687701d6af'
+        var link = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=metric&apikey=" + key;
+        var request = new XMLHttpRequest();
+        request.open('GET', link, true);
+        request.onload = function () {
+            var obj = JSON.parse(this.response);
+            if (request.status >= 200 && request.status < 400) {
+                var temp = obj.main.temp;
+                var status = obj.weather.main
+                var name = obj.name
+                var icon = `https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${obj.weather[0].icon}.svg`
+                console.log(obj, icon)
+                cityIcon[0].src = icon
+                nameElem[0].innerHTML = name
+                tempElem[0].innerHTML = `${temp} &#8457;`
+                statusElem[0].innerHTML = obj.weather[0].description
+                otherWeather[0].innerHTML = `Country: ${obj.sys.country} | Feel like: ${obj.main.feels_like} | Humidity: ${obj.main.humidity} | Tempareture: ${obj.main.temp_min}-${obj.main.temp_max} | Wind: ${obj.wind.speed}`
+
+
+            }
+            else {
+                console.log("The city doesn't exist! Kindly check");
+            }
+        }
+        request.send();
+    </script>
+    <script>
+        var SyncTimeframe = 5; // 5 seconds
+        var LastSyncKey = 'LastSyncWithTimeServer';
+        var TimeDiffKey = 'Local-Server-TimeDiff';
+
+        var RetryMax = 3;
+        var RetryCount = 0;
+        var AcceptedDelay = 500;
+
+        if (window.localStorage.getItem(LastSyncKey) == null) {
+            window.localStorage.setItem(LastSyncKey, '' + (new Date(0)));
+        }
+
+        LastSync = new Date(window.localStorage.getItem(LastSyncKey));
+
+        if (Math.abs((new Date()) - LastSync) > SyncTimeframe) {
+            SyncTime();
+        }
+        else {
+            ShowTime();
+        }
+
+        function SyncTime() {
+            var StartTime = new Date();
+
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("HEAD", "http://www.googleapis.com", true);
+            xmlhttp.onreadystatechange = function () {
+
+                if (xmlhttp.readyState == 4) {
+                    TimeDiff = new Date(xmlhttp.getResponseHeader("Date")) - (new Date()) + ((new Date()) - StartTime) / 2;
+
+                    if (++RetryCount < 3 && (new Date()) - StartTime > AcceptedDelay) {
+                        SyncTime();
+                    }
+                    else {
+                        window.localStorage.setItem(LastSyncKey, '' + (new Date()));
+                        window.localStorage.setItem(TimeDiffKey, TimeDiff);
+                        ShowTime();
+                    }
+
+                }
+            }
+            xmlhttp.send(null);
+            window.setTimeout(SyncTime, 5000);
+
+        }
+
+        function ShowTime() {
+            var AllNodes = document.getElementsByClassName("RealServerTime");
+            var heading = document.getElementsByClassName("time-heading-child");
+            var detail = document.getElementsByClassName("time-heading-detail");
+
+            var diff = parseInt(window.localStorage.getItem(TimeDiffKey), 10);
+
+            // format Date and Time 
+            var date = (new Date(Date.now() + diff))
+            var hour = date.getUTCHours()
+            var minute = date.getUTCMinutes()
+            var second = date.getUTCSeconds()
+            if (hour < 10) {
+                hour = `0${hour}`
+            }
+            if (minute < 10) {
+                minute = `0${minute}`
+            }
+            if (second < 10) {
+                second = `0${second}`
+            }
+
+            heading[0].innerHTML = `${hour}:${minute}:${second}`
+            detail[0].innerHTML = date.toISOString()
+            var TimeToString = (new Date(Date.now() + diff)).toTimeString().split(' ')[0];
+            if (diff < -100000) {
+                TimeToString = "NO INTERNET"
+            }
+
+            // window.setTimeout(ShowTime, 1000);
+
+        }
+    </script>
+</body>
+
 </html>
