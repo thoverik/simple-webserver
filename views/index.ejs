@@ -1,8 +1,18 @@
 <html>
 
 <head>
-    <title> Address Information </title>
+    <title>Welcome to Demo Corporation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <style>
+        body {
+            background-image: url('/blur-background-1.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
         .time-container,
         .address-container {
             color: #222;
@@ -66,8 +76,7 @@
 
         .time-heading-child,
         .weather-heading-child,
-        .address-heading-child
-         {
+        .address-heading-child {
             line-height: 1.2;
             text-align: left;
             font-family: arial, sans-serif;
@@ -79,8 +88,7 @@
 
         .time-heading-detail,
         .weather-heading-detail,
-        .address-heading-detail
-         {
+        .address-heading-detail {
             line-height: 1.2;
             text-align: left;
             font-family: arial, sans-serif;
@@ -89,45 +97,57 @@
             font-size: medium !important;
             text-transform: capitalize;
         }
+
+        .header {
+            margin-top: 50px;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+            font-size: 48px;
+            font-weight: 600;
+            color: #096dd9;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Your Ip Address</h1>
-    <div class="address-container">
-        <!--m-->
-        <div class="address-panel">
-            <h2 class="address-header"><%= clientIp %></h2>
-            <div class="address-heading">
-                <div class="address-heading-child"><%= clientIp %></div>
-                <div class="address-heading-detail">in: <%= city %></div>
-                <div class="address-heading-detail">Server address: <%= serverIp %></div>
-                <span class="vk_gy vk_sh"> Server Time:  <%= serverTime %> </span>
+    <div class="container">
+        <h1 class="header">Welcome to Demo Corporation</h1>
+        <div class="address-container">
+            <!--m-->
+            <div class="address-panel">
+                <h2 class="address-header"><%= clientIp %></h2>
+                <div class="address-heading">
+                    <div class="address-heading-child"><%= clientIp %></div>
+                    <div class="address-heading-detail">in: <%= city %></div>
+                    <div class="address-heading-detail">Server address: <%= serverIp %></div>
+                    <span class="vk_gy vk_sh"> Server Time: <%= serverTime %> </span>
+                    <div class="vk_gy vk_sh"> Server Timestamp: <%= serverTimestamp %> </div>
+                </div>
             </div>
+            <!--n-->
         </div>
-        <!--n-->
-    </div>
-    <h1>Clock</h1>
-    <div class="time-container">
-        <!--m-->
+        <h1>Clock</h1>
+        <div class="time-container">
+            <!--m-->
+            <div class="time-panel">
+                <h2 class="time-header">UTC Time</h2>
+                <div class="time-heading">
+                    <div class="time-heading-child">PINGING...</div>
+                    <div class="time-heading-detail">PINGING...</div>
+                    <span class="vk_gy vk_sh"> Time in UTC </span>
+                </div>
+            </div>
+            <!--n-->
+        </div>
+        <h1><span class='city'></span>&nbsp;Weather</h1>
         <div class="time-panel">
-            <h2 class="time-header">UTC Time</h2>
+            <h2 class="weather-header"></h2>
             <div class="time-heading">
-                <div class="time-heading-child">PINGING...</div>
-                <div class="time-heading-detail">PINGING...</div>
-                <span class="vk_gy vk_sh"> Time in UTC </span>
+                <img class="city-icon" src="" alt="" />
+                <div><span class="weather-heading-child">PINGING...</span></div>
+                <div class="weather-heading-detail">PINGING...</div>
+                <div class="weather-other"> </div>
             </div>
-        </div>
-        <!--n-->
-    </div>
-    <h1><span class='city'></span>&nbsp;Weather</h1>
-    <div class="time-panel">
-        <h2 class="weather-header"></h2>
-        <div class="time-heading">
-            <img class="city-icon" src="" alt="" />
-            <div><span class="weather-heading-child">PINGING...</span></div>
-            <div class="weather-heading-detail">PINGING...</div>
-            <div class="weather-other"> </div>
         </div>
     </div>
     <script>
@@ -246,6 +266,15 @@
 
         }
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

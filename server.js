@@ -16,12 +16,13 @@ const router = express.Router()
 router.get('/', function (req, res) {
   const ipInfo = req.ipInfo
   const serverTime = new Date().toLocaleString()
+  const serverTimestamp = Date.now()
   const clientIp = ipInfo.ip
   const serverIp = ip.address()
   const city = ipInfo.city
   res.setHeader('X-Powered-By', 'Verik Systems')
 
-  res.render('index', { clientIp, serverTime, serverIp, city })
+  res.render('index', { clientIp, serverTime, serverIp, city, serverTimestamp })
 })
 
 app.use(function (req, res, next) {
